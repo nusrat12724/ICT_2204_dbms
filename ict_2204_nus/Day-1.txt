@@ -1,0 +1,27 @@
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| information_schema |
+| mysql              |
+| performance_schema |
+| pmit               |
+| shop               |
+| sys                |
+| trade              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> CREAT DATABASE IIT;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREAT DATABASE IIT' at line 1
+mysql> CREATE DATABASE IIT;
+ERROR 1007 (HY000): Can't create database 'iit'; database exists
+mysql> CREATE DATABASE IT;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> ALTER USER 'root'@'localhost'IDENTIFIED BY'1234';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> Terminal close -- exit!

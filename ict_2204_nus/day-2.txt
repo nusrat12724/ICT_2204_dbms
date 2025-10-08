@@ -1,0 +1,105 @@
+mysql> show databases
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| information_schema |
+| it                 |
+| mysql              |
+| performance_schema |
+| pmit               |
+| shop               |
+| sys                |
+| trade              |
++--------------------+
+9 rows in set (0.00 sec)
+
+mysql> notee
+mysql> CREATE DATABASE IIT14BATCH;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> SHOW DATABASES
+    -> ;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| iit14batch         |
+| information_schema |
+| it                 |
+| mysql              |
+| performance_schema |
+| pmit               |
+| shop               |
+| sys                |
+| trade              |
++--------------------+
+10 rows in set (0.00 sec)
+
+mysql> USE IIT14BATCH;
+Database changed
+mysql> CREATE TABLE STUDENT(
+    -> STUDENT_ID INT,
+    -> STUDENT NAME VARCHAR(30),
+    -> SESSION VARCHAR(10),
+    -> CGPA FLOAT(5,2),
+    -> GENDER VARCHAR(7),
+    -> MOBILE_PHONE VARCHAR(15),
+    -> EMAIL VARCHAR(100),
+    -> DOB DATE)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NAME VARCHAR(30),
+SESSION VARCHAR(10),
+CGPA FLOAT(5,2),
+GENDER VARCHAR(7),
+MOBIL' at line 3
+mysql>  CREATE TABLE STUDENT(
+    ->     -> STUDENT_ID INT,
+    ->     -> STUDENT NAME VARCHAR(30),
+    ->     -> SESSION VARCHAR(10),
+    ->     -> CGPA FLOAT(5,2),
+    ->     -> GENDER VARCHAR(7),
+    ->     -> MOBILE_PHONE VARCHAR(15),
+    ->     -> EMAIL VARCHAR(100),
+    ->     -> DOB DATE)
+    -> EMAIL VARCHAR(100),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> STUDENT_ID INT,
+    -> STUDENT NAME VARCHAR(30),
+    -> SESSION VARCHAR(10),
+' at line 2
+mysql> CREAT TABLE STUDENT(
+    -> STUDENTID INT,
+    -> STUDENTNAME VARCHAR(30),
+    -> SESSION VARCHAR(10),
+    -> CGPA FLOAT(5,2),
+    -> GENDER VARCHAR(7),
+    -> MOBILE VARCHAR(15),
+    -> EMAIL VARCHAR(100),
+    -> DOB DATE);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREAT TABLE STUDENT(
+STUDENTID INT,
+STUDENTNAME VARCHAR(30),
+SESSION VARCHAR(10)' at line 1
+mysql> CREATE TABLE STUDENT(
+    -> STUDENTID INT,
+    -> STUDENTNAME VARCHAR(30),
+    -> SESSION VARCHAR (10),
+    -> CGPA FLOAT (5,2),
+    -> GENDER VARCHAR(7),
+    -> MOBILE VARCHAR(15),
+    -> DOB DATE);
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> SHOW TABLE
+    -> SHOW TABLES;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SHOW TABLES' at line 2
+mysql> SHOW TABLES;
++----------------------+
+| Tables_in_iit14batch |
++----------------------+
+| student              |
++----------------------+
+1 row in set (0.01 sec)
+
