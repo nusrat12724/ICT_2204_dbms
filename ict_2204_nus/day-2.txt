@@ -103,3 +103,125 @@ mysql> SHOW TABLES;
 +----------------------+
 1 row in set (0.01 sec)
 
+mysql> DESC STUDENT;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| STUDENTID   | int         | YES  |     | NULL    |       |
+| STUDENTNAME | varchar(30) | YES  |     | NULL    |       |
+| SESSION     | varchar(10) | YES  |     | NULL    |       |
+| CGPA        | float(5,2)  | YES  |     | NULL    |       |
+| GENDER      | varchar(7)  | YES  |     | NULL    |       |
+| MOBILE      | varchar(15) | YES  |     | NULL    |       |
+| DOB         | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> CREATE TABLE CUST(CUST_ID INT NOT NULL,CUST_NAME VARCHAR(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO CUST(CUST_ID,CUST_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT *FROM PRACT;
+ERROR 1146 (42S02): Table 'iit14batch.pract' doesn't exist
+mysql> SELECT *FROM CUST;
++---------+-----------+
+| CUST_ID | CUST_NAME |
++---------+-----------+
+|      10 | ASD       |
++---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREAT TABLE CUST(CUST_ID INT UNIQUE,CUST_NAME VARCHAR(10));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREAT TABLE CUST(CUST_ID INT UNIQUE,CUST_NAME VARCHAR(10))' at line 1
+mysql>  CREATE TABLE CUST(CUST_ID INT UNIQUE,CUST_NAME VARCHAR(10));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> INSERT INTO CUST(CUST_ID,CUST_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO CUST(CUST_ID,CUST_NAME) VALUES(10,'ASD');
+ERROR 1062 (23000): Duplicate entry '10' for key 'cust.CUST_ID'
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  CREATE TABLE CUST(CUST_ID INT ,CUST_NAME VARCHAR(10),UNIQUE(CUST_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  INSERT INTO CUST(CUST_ID,CUST_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> DROP TABLE CUST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE CUST(CUST_ID INT ,CUST_NAME VARCHAR(10),CONSTRAINT uc_cust_id UNIQUE(CUST_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DESC CUST;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| CUST_ID   | int         | YES  | UNI | NULL    |       |
+| CUST_NAME | varchar(10) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREAT TABLE EMP(EMP_ID INT,EMP_NAME VARCHAR(30),UNIQUE(EMP_ID));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CREAT TABLE EMP(EMP_ID INT,EMP_NAME VARCHAR(30),UNIQUE(EMP_ID))' at line 1
+mysql> ^C
+mysql>  CREATE TABLE EMP(EMP_ID INT,EMP_NAME VARCHAR(30),UNIQUE(EMP_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+ERROR 1062 (23000): Duplicate entry '10' for key 'emp.EMP_ID'
+mysql> CREATE TABLE EMP2(EMP2_ID INT ,EMP2_NAME VARCHAR(10),CONSTRAINT uc_emp2_id UNIQUE(CUST_ID));
+ERROR 1072 (42000): Key column 'CUST_ID' doesn't exist in table
+mysql> CREATE TABLE EMP2(EMP2_ID INT ,EMP2_NAME VARCHAR(10),CONSTRAINT uc_emp2_id UNIQUE(EMP2_ID));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql>  INSERT INTO EMP2(EMP2_ID,EMP2_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMP2(EMP2_ID,EMP2_NAME) VALUES(10,'ASD');
+ERROR 1062 (23000): Duplicate entry '10' for key 'emp2.uc_emp2_id'
+mysql> DROP TABLE EMP;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE EMP(EMP_ID INT PRIMARY KEY,EMP_NAME VARCHAR(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+ERROR 1062 (23000): Duplicate entry '10' for key 'emp.PRIMARY'
+mysql> DROP TABLE EMP;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  CREATE TABLE EMP(EMP_ID INT,EMP_NAME VARCHAR(30),PRIMARY KEY (EMP_ID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+ERROR 1062 (23000): Duplicate entry '10' for key 'emp.PRIMARY'
+mysql> DROP TABLE EMP;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql>  CREATE TABLE EMP(EMP_ID INT ,EMP_NAME VARCHAR(10),CONSTRAINT uc_emp_id PRIMARY KEY(EMP_ID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql>  INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>  INSERT INTO EMP(EMP_ID,EMP_NAME) VALUES(10,'ASD');
+ERROR 1062 (23000): Duplicate entry '10' for key 'emp.PRIMARY'
+mysql> Terminal close -- exit!
