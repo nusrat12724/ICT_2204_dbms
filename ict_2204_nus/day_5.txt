@@ -1,0 +1,369 @@
+mysql> use database iit;
+ERROR 1049 (42000): Unknown database 'database'
+mysql> USE DATABASE iit
+ERROR 1049 (42000): Unknown database 'database'
+mysql> USE DATABASE it
+ERROR 1049 (42000): Unknown database 'database'
+mysql> USE DATABASE it;
+ERROR 1049 (42000): Unknown database 'database'
+mysql> use iit;
+Database changed
+mysql> show tables;
++---------------+
+| Tables_in_iit |
++---------------+
+| stud          |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> desc stud;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ROLL    | int         | YES  |     | NULL    |       |
+| NAME    | varchar(20) | YES  |     | NULL    |       |
+| SECTION | varchar(5)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUD ADD STUDENTCODE VARCHAR(20);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STUD;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| ROLL        | int         | YES  |     | NULL    |       |
+| NAME        | varchar(20) | YES  |     | NULL    |       |
+| SECTION     | varchar(5)  | YES  |     | NULL    |       |
+| STUDENTCODE | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM STUD;
++------+---------+---------+-------------+
+| ROLL | NAME    | SECTION | STUDENTCODE |
++------+---------+---------+-------------+
+|    1 | YIUGE   | D       | NULL        |
+|    2 | NUSRAT  | C       | NULL        |
+|    3 | NIPA    | B       | NULL        |
+|    5 | TAHRIMA | C       | NULL        |
++------+---------+---------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE STUD SET STUDENTCODE='IIT_14' WHERE NAME='NUSRAT';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT *FROM STUD;
++------+---------+---------+-------------+
+| ROLL | NAME    | SECTION | STUDENTCODE |
++------+---------+---------+-------------+
+|    1 | YIUGE   | D       | NULL        |
+|    2 | NUSRAT  | C       | IIT_14      |
+|    3 | NIPA    | B       | NULL        |
+|    5 | TAHRIMA | C       | NULL        |
++------+---------+---------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUD DROP COLUMN STUDENTCODE;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM STUD;
++------+---------+---------+
+| ROLL | NAME    | SECTION |
++------+---------+---------+
+|    1 | YIUGE   | D       |
+|    2 | NUSRAT  | C       |
+|    3 | NIPA    | B       |
+|    5 | TAHRIMA | C       |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUD ADD CONSTRAINT pk_studentid PRIMARY KEY(ROLL);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM STUD;
++------+---------+---------+
+| ROLL | NAME    | SECTION |
++------+---------+---------+
+|    1 | YIUGE   | D       |
+|    2 | NUSRAT  | C       |
+|    3 | NIPA    | B       |
+|    5 | TAHRIMA | C       |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> DESC STUD;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ROLL    | int         | NO   | PRI | NULL    |       |
+| NAME    | varchar(20) | YES  |     | NULL    |       |
+| SECTION | varchar(5)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE(EMP_ID INT,EMP_NAME VARCHAR(20))
+    -> ;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(1001,'NUSRAT';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> INSERT INTO EMPLOYEE VALUES(1001,'NUSRAT');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(1002,'JINIA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD ROLL INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM EMPLOYEE;
++--------+----------+------+
+| EMP_ID | EMP_NAME | ROLL |
++--------+----------+------+
+|   1001 | NUSRAT   | NULL |
+|   1002 | JINIA    | NULL |
++--------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE DROP COLUMN ROLL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEE ADD ROLL INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEE DROP COLUMN ROLL;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE EMPLOYEE ADD COLOUM ROLL INT REFERENCES STUD(ROLL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ROLL INT REFERENCES STUD(ROLL)' at line 1
+mysql> ALTER TABLE EMPLOYEE ADD COLUMN ROLL INT REFERENCES STUD(ROLL);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC EMPLOYEE;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMP_ID   | int         | YES  |     | NULL    |       |
+| EMP_NAME | varchar(20) | YES  |     | NULL    |       |
+| ROLL     | int         | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> DESC STUD;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ROLL    | int         | NO   | PRI | NULL    |       |
+| NAME    | varchar(20) | YES  |     | NULL    |       |
+| SECTION | varchar(5)  | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD CONSTRAINT fk_roll FOREIGN KEY(ROLL) REFERENCES INFO(ROLL);
+ERROR 1824 (HY000): Failed to open the referenced table 'info'
+mysql> ALTER TABLE EMPLOYEE ADD CONSTRAINT fk_roll FOREIGN KEY(ROLL) REFERENCES STUD(ROLL);
+Query OK, 2 rows affected (0.05 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++--------+----------+------+
+| EMP_ID | EMP_NAME | ROLL |
++--------+----------+------+
+|   1001 | NUSRAT   | NULL |
+|   1002 | JINIA    | NULL |
++--------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM STUD;
++------+---------+---------+
+| ROLL | NAME    | SECTION |
++------+---------+---------+
+|    1 | YIUGE   | D       |
+|    2 | NUSRAT  | C       |
+|    3 | NIPA    | B       |
+|    5 | TAHRIMA | C       |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET ROLL=1 WHERE EMP_NAME='NUSRAT';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++--------+----------+------+
+| EMP_ID | EMP_NAME | ROLL |
++--------+----------+------+
+|   1001 | NUSRAT   |    1 |
+|   1002 | JINIA    | NULL |
++--------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> ALTER TABLE EMPLOYEE ADD COLUMN SALARY INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'employee.PRIMARY'
+mysql>  UPDATE EMPLOYEE SET ROLL=2 WHERE EMP_NAME='JINIA';
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  ALTER TABLE EMPLOYEE ADD COLUMN SALARY INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'employee.PRIMARY'
+mysql> DESC EMPLOYEE;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| EMP_ID   | int         | YES  |     | NULL    |       |
+| EMP_NAME | varchar(20) | YES  |     | NULL    |       |
+| ROLL     | int         | YES  | MUL | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE ADD COLUMN SALARY INT PRIMARY KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ADD COLUMN SALARY INT PRIMARY KEY' at line 1
+mysql> ALTER TABLE EMPLOYEE ADD COLUMN SALARY INT PRIMARY KEY;
+ERROR 1062 (23000): Duplicate entry '0' for key 'employee.PRIMARY'
+mysql> SELECT *FROM EMPLOYEE;
++--------+----------+------+
+| EMP_ID | EMP_NAME | ROLL |
++--------+----------+------+
+|   1001 | NUSRAT   |    1 |
+|   1002 | JINIA    |    2 |
++--------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM STUD;
++------+---------+---------+
+| ROLL | NAME    | SECTION |
++------+---------+---------+
+|    1 | YIUGE   | D       |
+|    2 | NUSRAT  | C       |
+|    3 | NIPA    | B       |
+|    5 | TAHRIMA | C       |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TEST(ID INT ,NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO TEST VALUES(4567,'NIPA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD COLUMN SALARY INT PRIMARY KEY;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM TEST;
++------+------+--------+
+| ID   | NAME | SALARY |
++------+------+--------+
+| 4567 | NIPA |      0 |
++------+------+--------+
+1 row in set (0.00 sec)
+
+mysql> DESC TEST;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| ID     | int         | YES  |     | NULL    |       |
+| NAME   | varchar(20) | YES  |     | NULL    |       |
+| SALARY | int         | NO   | PRI | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD COLUMN TESTID INT,ADD CONSTRAINT pk_TESTID PRIMARY KEY(TESTID);
+ERROR 1068 (42000): Multiple primary key defined
+mysql> DROP TABLE TEST;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE TEST(ID INT ,NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO TEST VALUES(4567,'NIPA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> ALTER TABLE TEST ADD CONSTRAINT fk_ID PRIMARY KEY(ID,NAME);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC TEST;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ID    | int         | NO   | PRI | NULL    |       |
+| NAME  | varchar(20) | NO   | PRI | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM EMPLOYEE;
++--------+----------+------+
+| EMP_ID | EMP_NAME | ROLL |
++--------+----------+------+
+|   1001 | NUSRAT   |    1 |
+|   1002 | JINIA    |    2 |
++--------+----------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM STUD;
++------+---------+---------+
+| ROLL | NAME    | SECTION |
++------+---------+---------+
+|    1 | YIUGE   | D       |
+|    2 | NUSRAT  | C       |
+|    3 | NIPA    | B       |
+|    5 | TAHRIMA | C       |
++------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID,EMP_NAME,NAME,SECTION FROM EMPLOYEE,STUDENT;
+ERROR 1146 (42S02): Table 'iit.student' doesn't exist
+mysql> SELECT EMP_ID,EMP_NAME,NAME,SECTION FROM EMPLOYEE,STUD;
++--------+----------+---------+---------+
+| EMP_ID | EMP_NAME | NAME    | SECTION |
++--------+----------+---------+---------+
+|   1002 | JINIA    | YIUGE   | D       |
+|   1001 | NUSRAT   | YIUGE   | D       |
+|   1002 | JINIA    | NUSRAT  | C       |
+|   1001 | NUSRAT   | NUSRAT  | C       |
+|   1002 | JINIA    | NIPA    | B       |
+|   1001 | NUSRAT   | NIPA    | B       |
+|   1002 | JINIA    | TAHRIMA | C       |
+|   1001 | NUSRAT   | TAHRIMA | C       |
++--------+----------+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> DROP TABLE EMPLOYEE;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT*FROM TEST;
++------+------+
+| ID   | NAME |
++------+------+
+| 4567 | NIPA |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE(ID INT,NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EMPLOYEE(ID,NAME)SELECT ID,NAME FROM TEST;
+Query OK, 1 row affected (0.01 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM EMPLOYEE;
++------+------+
+| ID   | NAME |
++------+------+
+| 4567 | NIPA |
++------+------+
+1 row in set (0.00 sec)
+
+mysql> NOTEE;
