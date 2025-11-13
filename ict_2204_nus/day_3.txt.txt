@@ -1,0 +1,246 @@
+mysql> CREATE DATABASE NIPA;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE NIPA;
+Database changed
+mysql> CREATE TABLE LAB3(
+    -> NAME VARCHAR(30),
+    -> ID INT,
+    -> AGE TINYINT,
+    -> SEMESTER VARCHAR(5),
+    -> CODE VARCHAR(50),
+    -> PRIMARY KEY(ID,CODE));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO LAB3(NAME,ID,AGE,SEMESTER,CODE) VALUES('NOWRIN',2003,18,'2-2',7483);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO LAB3(NAME,ID,AGE,SEMESTER,CODE) VALUES('NOWRIN',2003,18,'2-2',7483);
+ERROR 1062 (23000): Duplicate entry '2003-7483' for key 'lab3.PRIMARY'
+mysql> DESC LAB3;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| NAME     | varchar(30) | YES  |     | NULL    |       |
+| ID       | int         | NO   | PRI | NULL    |       |
+| AGE      | tinyint     | YES  |     | NULL    |       |
+| SEMESTER | varchar(5)  | YES  |     | NULL    |       |
+| CODE     | varchar(50) | NO   | PRI | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE USERTYPE(
+    -> USERTYPE_ID INT,
+    -> USER_NAME VARCHAR(40),
+    -> PRIMARY KEY (USERTYPE_ID));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO USERTYPE(USERTYPE_ID,USER_NAME) VALUES(101,'ABC');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USERTYPE(USERTYPE_ID,USER_NAME) VALUES(102,'EFG');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USERTYPE(USERTYPE_ID,USER_NAME) VALUES(103,'KLM');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USERTYPE(USERTYPE_ID,USER_NAME) VALUES(104,'OMP');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO USERTYPE(USERTYPE_ID,USER_NAME) VALUES(105,'XYZ');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW TABLE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SHOW TABLE USERTYPE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'USERTYPE' at line 1
+mysql> SHOW TABLES;
++----------------+
+| Tables_in_nipa |
++----------------+
+| lab3           |
+| usertype       |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> SHOW *FROM USERTYPE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*FROM USERTYPE' at line 1
+mysql> SELECT *FROM USERTYPE;
++-------------+-----------+
+| USERTYPE_ID | USER_NAME |
++-------------+-----------+
+|         101 | ABC       |
+|         102 | EFG       |
+|         103 | KLM       |
+|         104 | OMP       |
+|         105 | XYZ       |
++-------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> CREATE TABLE USER(USER_ID INT PRIMARY KEY, USERNAME VARCHAR(50), DOB DATE, USER_TYPE_ID INT, FOREIGN KEY(USER_TYPE_ID) REFERENCES USERTYPE(USERTYPE_ID));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> DROP TABLE USER;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE USER(USER_ID INT PRIMARY KEY, USERNAME VARCHAR(50), DOB DATE, USERTYPE_ID INT, FOREIGN KEY(USERTYPE_ID) REFERENCES USERTYPE(USERTYPE_ID)););
+Query OK, 0 rows affected (0.03 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 1
+mysql> CREATE TABLE USER(USER_ID INT PRIMARY KEY, USERNAME VARCHAR(50), DOB DATE, USERTYPE_ID INT, FOREIGN KEY(USERTYPE_ID) REFERENCES USERTYPE(USERTYPE_ID));
+ERROR 1050 (42S01): Table 'user' already exists
+mysql> CREATE TABLE USER(USER_ID INT PRIMARY KEY, USERNAME VARCHAR(50), DOB DATE, USERTYPE_ID INT, FOREIGN KEY(USERTYPE_ID) REFERENCES USERTYPE(USERTYPE_ID))
+    -> ;
+ERROR 1050 (42S01): Table 'user' already exists
+mysql> DROP TABLE USER;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE USER(USER_ID INT PRIMARY KEY, USERNAME VARCHAR(50), DOB DATE, USERTYPE_ID INT, FOREIGN KEY(USERTYPE_ID) REFERENCES USERTYPE(USERTYPE_ID));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO USER(USER_ID,USERNAME,DOB,USERTYPE_ID) VALUES(1,'NIPA','2002-11-12',20012);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (nipa.user, CONSTRAINT user_ibfk_1 FOREIGN KEY (USERTYPE_ID) REFERENCES usertype (USERTYPE_ID))
+mysql> CREATE TABLE USER_2(USER_ID INT PRIMARY KEY, USERNAME VARCHAR(50), DOB DATE, USERTYPE_ID INT,CONSTRAINT fk_user_type_id FOREIGN KEY(USERTYPE_ID) REFERENCES USERTYPE(USERTYPE_ID));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO USER(USER_ID,USERNAME,DOB,USERTYPE_ID) VALUES(1,'NIPA','2002-11-12',20012);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (nipa.user, CONSTRAINT user_ibfk_1 FOREIGN KEY (USERTYPE_ID) REFERENCES usertype (USERTYPE_ID))
+mysql> CREATE TABLE ROUTE(ROUTE_NO INT PRIMARY KEY, ROUTE_NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO ROUTE(ROUTE_NO,ROUTE_NAME) VALUES (1,'WALK');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ROUTE(ROUTE_NO,ROUTE_NAME) VALUES (2,'BUS');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ROUTE(ROUTE_NO,ROUTE_NAME) VALUES (3,'TRAIN');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> CREATE TABLE INFO(STUDENT_NAME VARCHAR(30), DEPT VARCHAR(10),ROUTE_NO INT,FOREIGN KEY(ROUTE_NO) REFERENCES ROUTE(ROUTE_NO));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('NIPA','IIT,2);
+    '> ;
+    '> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('NIPA','IIT',2);
+    '> ;
+    '> CREATE TABLE INFO(STUDENT_NAME VARCHAR(30), DEPT VARCHAR(10),ROUTE_NO INT,FOREIGN KEY(ROUTE_NO) REFERENCES ROUTE(ROUTE_NO));
+    '> 
+    '> INSERT INTO USER(USER_ID,USERNAME,DOB,USERTYPE_ID) VALUES(1,'NIPA','2002-11-12',20012);
+    '> 
+    '> 
+    '> JJK
+    '> INSERT INTO ROUTE(ROUTE_NO,ROUTE_NAME) VALUES (2,'BUS');
+    '> DROP TABLE INFO;
+    '> 
+    '> INSERT INTO USER(USER_ID,USERNAME,DOB,USERTYPE_ID) VALUES(1,'NIPA','2002-11-12',20012);
+    '> 
+    '> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('NIPA','IIT',2);LL'
+    -> ^C
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('NIPA','IIT',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('AMAN','CSE',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('ROWK','PHY',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('ROWK','PHY',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (nipa.info, CONSTRAINT info_ibfk_1 FOREIGN KEY (ROUTE_NO) REFERENCES route (ROUTE_NO))
+mysql> DROP TABLE INFO;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE INFO(STUDENT_NAME VARCHAR(30), DEPT VARCHAR(10),ROUTE_NO INT,CONSTRAINT fk_route_no FOREIGN KEY(ROUTE_NO) REFERENCES ROUTE(ROUTE_NO));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('NIPA','IIT',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('AMAN','CSE',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO INFO(STUDENT_NAME,DEPT,ROUTE_NO) VALUES('AMAN','CSE',4);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (nipa.info, CONSTRAINT fk_route_no FOREIGN KEY (ROUTE_NO) REFERENCES route (ROUTE_NO))
+mysql> SELECT *FROM INFO;
++--------------+------+----------+
+| STUDENT_NAME | DEPT | ROUTE_NO |
++--------------+------+----------+
+| NIPA         | IIT  |        2 |
+| AMAN         | CSE  |        3 |
++--------------+------+----------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE PERSON(ID INT,PERSON_NAME VARCHAR(30),AGE SMALLINT, CHECK (AGE>=18));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO PERSON(ID,PERSON_NAME,AGE) VALUES(101,'NIPUI',22);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO PERSON(ID,PERSON_NAME,AGE) VALUES(101,'NIPUI',17);
+ERROR 3819 (HY000): Check constraint 'person_chk_1' is violated.
+mysql> DROP TABLE PERSON;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> CREATE TABLE PERSON(ID INT,PERSON_NAME VARCHAR(30),AGE SMALLINT, CHECK(AGE>=18) ,CITY VARCHAR(30) DEFAULT 'ITALY', TEST_DATE DEFAULT GETDATE());
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DEFAULT GETDATE())' at line 1
+mysql> CREATE TABLE PERSON(ID INT,PERSON_NAME VARCHAR(30),AGE SMALLINT, CHECK(AGE>=18) ,CITY VARCHAR(30) DEFAULT 'ITALY', TEST_DATE DATETIME DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO PERSON(ID,PERSON_NAME,AGE) VALUES(101,'NIPUI',19);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM PERSON;
++------+-------------+------+-------+---------------------+
+| ID   | PERSON_NAME | AGE  | CITY  | TEST_DATE           |
++------+-------------+------+-------+---------------------+
+|  101 | NIPUI       |   19 | ITALY | 2025-10-12 12:13:49 |
++------+-------------+------+-------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> CREATE TABLE BTB_HALL(ID INT,PERSON_NAME VARCHAR(30),AGE SMALLINT, CHECK(AGE>=18) ,CITY VARCHAR(30) DEFAULT 'RAJSHAHI', ENTRY_DATE DATETIME DEFAULT CURRENT_TIMESTAMP);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO PERSON(ID,PERSON_NAME,AGE) VALUES(2003,'NIPUI',21);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM BTB_HALL;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO BTB_HALL(ID,PERSON_NAME,AGE) VALUES(2003,'NIPUI',21);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM BTB_HALL;
++------+-------------+------+----------+---------------------+
+| ID   | PERSON_NAME | AGE  | CITY     | ENTRY_DATE          |
++------+-------------+------+----------+---------------------+
+| 2003 | NIPUI       |   21 | RAJSHAHI | 2025-10-12 12:16:47 |
++------+-------------+------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO PERSON(ID,PERSON_NAME,AGE,CITY) VALUES(2000,'ELMA',21,'CHANDPUR);
+    '> ^C
+mysql> INSERT INTO PERSON(ID,PERSON_NAME,AGE,CITY) VALUES(2000,'ELMA',21,'CHANDPUR');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM BTB_HALL;
++------+-------------+------+----------+---------------------+
+| ID   | PERSON_NAME | AGE  | CITY     | ENTRY_DATE          |
++------+-------------+------+----------+---------------------+
+| 2003 | NIPUI       |   21 | RAJSHAHI | 2025-10-12 12:16:47 |
++------+-------------+------+----------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO BTB_HALL(ID,PERSON_NAME,AGE,CITY) VALUES(2000,'ELMA',21,'CHANDPUR');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM BTB_HALL;
++------+-------------+------+----------+---------------------+
+| ID   | PERSON_NAME | AGE  | CITY     | ENTRY_DATE          |
++------+-------------+------+----------+---------------------+
+| 2003 | NIPUI       |   21 | RAJSHAHI | 2025-10-12 12:16:47 |
+| 2000 | ELMA        |   21 | CHANDPUR | 2025-10-12 12:19:11 |
++------+-------------+------+----------+---------------------+
+2 rows in set (0.00 sec)
+
+mysql> notee
