@@ -1,0 +1,468 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| iit14batch         |
+| information_schema |
+| it                 |
+| labquiz_1_1993     |
+| mysql              |
+| performance_schema |
+| pmit               |
+| shop               |
+| sys                |
+| trade              |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> use it
+Database changed
+mysql> show tabls;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'tabls' at line 1
+mysql> show tables;
++--------------+
+| Tables_in_it |
++--------------+
+| dept         |
+| emp          |
+| st           |
++--------------+
+3 rows in set (0.01 sec)
+
+mysql> select *from dept;
+Empty set (0.01 sec)
+
+mysql> select*from emp;
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    102 |   5000 | NUSRAT   |
+|    104 |   4000 | NUSRAT   |
++--------+--------+----------+
+2 rows in set (0.01 sec)
+
+mysql> select*from st;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.01 sec)
+
+mysql> delete table st where st_id=3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table st where st_id=3' at line 1
+mysql> delete from st where st_id=3;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select*from st;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
++-------+---------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> select (((SELECT AVG(SALARY)FROM EMP WHERE EMP_ID=102)*5)/100) AS DISCOUNT FROM EMP WHERE EMP_ID=102;
++--------------+
+| DISCOUNT     |
++--------------+
+| 250.00000000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select (((SELECT AVG(SALARY)FROM EMP)*5)/100) AS DISCOUNT FROM EMP WHERE EMP_ID=102;
++--------------+
+| DISCOUNT     |
++--------------+
+| 225.00000000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select (((SELECT AVG(SALARY)FROM EMP)*5)/100) AS DISCOUNT,EMP_NAME FROM EMP WHERE EMP_ID=102;
++--------------+----------+
+| DISCOUNT     | EMP_NAME |
++--------------+----------+
+| 225.00000000 | NUSRAT   |
++--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select (((SELECT AVG(SALARY)FROM EMP)*5)/100) AS DISCOUNT,EMP_NAME FROM EMP;
++--------------+----------+
+| DISCOUNT     | EMP_NAME |
++--------------+----------+
+| 225.00000000 | NUSRAT   |
+| 225.00000000 | NUSRAT   |
++--------------+----------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET EMP_NAME='NIPA' WHERE EMP_ID=104;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM EMP;
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    102 |   5000 | NUSRAT   |
+|    104 |   4000 | NIPA     |
++--------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM(SELECT EMP_ID,EMP_NAME FROM EMP)AS DUMMY_TABLE;
++--------+----------+
+| EMP_ID | EMP_NAME |
++--------+----------+
+|    102 | NUSRAT   |
+|    104 | NIPA     |
++--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM(SELECT EMP_ID,EMP_NAME FROM EMP)AS DUMMY_TABLE WHERE DUMMY_TABLE.EMP_ID=102;
++--------+----------+
+| EMP_ID | EMP_NAME |
++--------+----------+
+|    102 | NUSRAT   |
++--------+----------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE EMP ADD COLUMN ST_ID INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DROP TABLE ST;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> UPDATE EMP SET ST_ID=1 WHERE EMP_ID=102;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMP SET ST_ID=2 WHERE EMP_ID=104;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> CREATE TABLE ST(ST_ID INT,NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO ST(1,'ESHA');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '1,'ESHA')' at line 1
+mysql> INSERT INTO ST VALUES (1,'ESHA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO ST VALUES (2,'NILA');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM ST WHERE ID IN(SELECT ST_ID FROM EMP);
+ERROR 1054 (42S22): Unknown column 'ID' in 'IN/ALL/ANY subquery'
+mysql> SELECT*FROM ST WHERE ST_ID IN(SELECT ST_ID FROM EMP);
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
+|     2 | NILA |
++-------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMP;
++--------+--------+----------+-------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID |
++--------+--------+----------+-------+
+|    102 |   5000 | NUSRAT   |     1 |
+|    104 |   4000 | NIPA     |     2 |
++--------+--------+----------+-------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMP VALUES(103,6000,'XYZ',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO EMP VALUES(104,7000,'LMN',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_ID=(SELECT ST_ID FROM EMP GROUP BY ST_ID HAVING COUNT(ST_ID)=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SELECT *FROM ST WHERE ST_ID=(SELECT ST_ID FROM EMP GROUP BY ST_ID HAVING COUNT(ST_ID)=1);
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
++-------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_ID=(SELECT ST_ID FROM EMP GROUP BY ST_ID HAVING COUNT(ST_ID)>1);
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     2 | NILA |
++-------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT*FROM ST;
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
+|     2 | NILA |
++-------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMP;
++--------+--------+----------+-------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID |
++--------+--------+----------+-------+
+|    102 |   5000 | NUSRAT   |     1 |
+|    104 |   4000 | NIPA     |     2 |
+|    103 |   6000 | XYZ      |     2 |
+|    104 |   7000 | LMN      |     2 |
++--------+--------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE TEST(TEST_NAME VARCHAR(20),TEST_ID INT);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> CREATE TABLE TEST_1(TEST_NAME VARCHAR(20),TEST_ID INT);
+Query OK, 0 rows affected (0.11 sec)
+
+mysql> INSERT INTO TEST VALUES('NUS',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEST VALUES('NIPA',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEST_1 VALUES('NIPA',2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEST_1 VALUES('NUS',1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> INSERT INTO TEST VALUES('NAAA',3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM TEST;
++-----------+---------+
+| TEST_NAME | TEST_ID |
++-----------+---------+
+| NUS       |       1 |
+| NIPA      |       2 |
+| NAAA      |       3 |
++-----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT*FROM TEST_1;
++-----------+---------+
+| TEST_NAME | TEST_ID |
++-----------+---------+
+| NIPA      |       2 |
+| NUS       |       1 |
++-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM TEST WHERE(TEST_NAME,TEST_ID)IN(SELECT TEST_NAME,TEST_ID FROM TEST_1);
++-----------+---------+
+| TEST_NAME | TEST_ID |
++-----------+---------+
+| NUS       |       1 |
+| NIPA      |       2 |
++-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM TEST_1 WHERE(TEST_NAME,TEST_ID)IN(SELECT TEST_NAME,TEST_ID FROM TEST);
++-----------+---------+
+| TEST_NAME | TEST_ID |
++-----------+---------+
+| NIPA      |       2 |
+| NUS       |       1 |
++-----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMP;
++--------+--------+----------+-------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID |
++--------+--------+----------+-------+
+|    102 |   5000 | NUSRAT   |     1 |
+|    104 |   4000 | NIPA     |     2 |
+|    103 |   6000 | XYZ      |     2 |
+|    104 |   7000 | LMN      |     2 |
++--------+--------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM ST;
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
+|     2 | NILA |
++-------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST S INNER JOIN EMP E ON S.ST_ID=E.ST_ID;
++-------+------+--------+--------+----------+-------+
+| ST_ID | NAME | EMP_ID | SALARY | EMP_NAME | ST_ID |
++-------+------+--------+--------+----------+-------+
+|     1 | ESHA |    102 |   5000 | NUSRAT   |     1 |
+|     2 | NILA |    104 |   4000 | NIPA     |     2 |
+|     2 | NILA |    103 |   6000 | XYZ      |     2 |
+|     2 | NILA |    104 |   7000 | LMN      |     2 |
++-------+------+--------+--------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST S NATARUL JOIN EMP E ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NATARUL JOIN EMP E' at line 1
+mysql> SELECT *FROM ST S NATURUL JOIN EMP E ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NATURUL JOIN EMP E' at line 1
+mysql> SELECT *FROM ST S NATURAL JOIN EMP E ;
++-------+------+--------+--------+----------+
+| ST_ID | NAME | EMP_ID | SALARY | EMP_NAME |
++-------+------+--------+--------+----------+
+|     1 | ESHA |    102 |   5000 | NUSRAT   |
+|     2 | NILA |    104 |   4000 | NIPA     |
+|     2 | NILA |    103 |   6000 | XYZ      |
+|     2 | NILA |    104 |   7000 | LMN      |
++-------+------+--------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST S CROSS JOIN EMP E ;
++-------+------+--------+--------+----------+-------+
+| ST_ID | NAME | EMP_ID | SALARY | EMP_NAME | ST_ID |
++-------+------+--------+--------+----------+-------+
+|     2 | NILA |    102 |   5000 | NUSRAT   |     1 |
+|     1 | ESHA |    102 |   5000 | NUSRAT   |     1 |
+|     2 | NILA |    104 |   4000 | NIPA     |     2 |
+|     1 | ESHA |    104 |   4000 | NIPA     |     2 |
+|     2 | NILA |    103 |   6000 | XYZ      |     2 |
+|     1 | ESHA |    103 |   6000 | XYZ      |     2 |
+|     2 | NILA |    104 |   7000 | LMN      |     2 |
+|     1 | ESHA |    104 |   7000 | LMN      |     2 |
++-------+------+--------+--------+----------+-------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST;
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
+|     2 | NILA |
++-------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM EMP;
++--------+--------+----------+-------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID |
++--------+--------+----------+-------+
+|    102 |   5000 | NUSRAT   |     1 |
+|    104 |   4000 | NIPA     |     2 |
+|    103 |   6000 | XYZ      |     2 |
+|    104 |   7000 | LMN      |     2 |
++--------+--------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO ST(ST_ID)VALUES(3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM ST;
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
+|     2 | NILA |
+|     3 | NULL |
++-------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST S LEFT JOIN EMP E ON S.ST_ID=E.ST_ID;
++-------+------+--------+--------+----------+-------+
+| ST_ID | NAME | EMP_ID | SALARY | EMP_NAME | ST_ID |
++-------+------+--------+--------+----------+-------+
+|     1 | ESHA |    102 |   5000 | NUSRAT   |     1 |
+|     2 | NILA |    104 |   7000 | LMN      |     2 |
+|     2 | NILA |    103 |   6000 | XYZ      |     2 |
+|     2 | NILA |    104 |   4000 | NIPA     |     2 |
+|     3 | NULL |   NULL |   NULL | NULL     |  NULL |
++-------+------+--------+--------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT *FROM EMP E LEFT JOIN ST S ON S.ST_ID=E.ST_ID;
++--------+--------+----------+-------+-------+------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID | ST_ID | NAME |
++--------+--------+----------+-------+-------+------+
+|    102 |   5000 | NUSRAT   |     1 |     1 | ESHA |
+|    104 |   4000 | NIPA     |     2 |     2 | NILA |
+|    103 |   6000 | XYZ      |     2 |     2 | NILA |
+|    104 |   7000 | LMN      |     2 |     2 | NILA |
++--------+--------+----------+-------+-------+------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE EMP SET ST_ID=3 WHERE EMP_ID=103;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> DELETE FROM ST WHERE ST_ID=3;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT*FROM ST;
++-------+------+
+| ST_ID | NAME |
++-------+------+
+|     1 | ESHA |
+|     2 | NILA |
++-------+------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMP;
++--------+--------+----------+-------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID |
++--------+--------+----------+-------+
+|    102 |   5000 | NUSRAT   |     1 |
+|    104 |   4000 | NIPA     |     2 |
+|    103 |   6000 | XYZ      |     3 |
+|    104 |   7000 | LMN      |     2 |
++--------+--------+----------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST S LEFT JOIN EMP E ON S.ST_ID=E.ST_ID;
++-------+------+--------+--------+----------+-------+
+| ST_ID | NAME | EMP_ID | SALARY | EMP_NAME | ST_ID |
++-------+------+--------+--------+----------+-------+
+|     1 | ESHA |    102 |   5000 | NUSRAT   |     1 |
+|     2 | NILA |    104 |   7000 | LMN      |     2 |
+|     2 | NILA |    104 |   4000 | NIPA     |     2 |
++-------+------+--------+--------+----------+-------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT *FROM EMP E LEFT JOIN ST S ON S.ST_ID=E.ST_ID;
++--------+--------+----------+-------+-------+------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID | ST_ID | NAME |
++--------+--------+----------+-------+-------+------+
+|    102 |   5000 | NUSRAT   |     1 |     1 | ESHA |
+|    104 |   4000 | NIPA     |     2 |     2 | NILA |
+|    103 |   6000 | XYZ      |     3 |  NULL | NULL |
+|    104 |   7000 | LMN      |     2 |     2 | NILA |
++--------+--------+----------+-------+-------+------+
+4 rows in set (0.00 sec)
+
+mysql>  SELECT *FROM EMP E RIGHT JOIN ST S ON S.ST_ID=E.ST_ID;
++--------+--------+----------+-------+-------+------+
+| EMP_ID | SALARY | EMP_NAME | ST_ID | ST_ID | NAME |
++--------+--------+----------+-------+-------+------+
+|    102 |   5000 | NUSRAT   |     1 |     1 | ESHA |
+|    104 |   7000 | LMN      |     2 |     2 | NILA |
+|    104 |   4000 | NIPA     |     2 |     2 | NILA |
++--------+--------+----------+-------+-------+------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT E.ST_ID,E.EMP_ID,E.SALARY,E.EMP_NAME FROM EMP AS E LEFT OUTER JOIN ST S ON S.ST_ID=E.ST_ID UNION SELECT E.ST_ID,E.EMP_ID,E.SALARY,E.EMP_NAME FROM EMP AS E RIGHT OUTER JOIN ST S ON S.ST_ID=E.ST_ID
+    -> ;
++-------+--------+--------+----------+
+| ST_ID | EMP_ID | SALARY | EMP_NAME |
++-------+--------+--------+----------+
+|     1 |    102 |   5000 | NUSRAT   |
+|     2 |    104 |   4000 | NIPA     |
+|     3 |    103 |   6000 | XYZ      |
+|     2 |    104 |   7000 | LMN      |
++-------+--------+--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> NOTEE;
