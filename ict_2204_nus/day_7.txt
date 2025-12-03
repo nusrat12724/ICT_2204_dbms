@@ -1,0 +1,269 @@
+mysql> use it;
+Database changed
+mysql> SHOW TABLES;
++--------------+
+| Tables_in_it |
++--------------+
+| dept         |
+| st           |
++--------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT DATE("2017-06-30");
++--------------------+
+| DATE("2017-06-30") |
++--------------------+
+| 2017-06-30         |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2020-6-22");
+ERROR 1582 (42000): Incorrect parameter count in the call to native function 'DATE_FORMAT'
+mysql> SELECT DATE_FORMAT("2020-6-22",%Y);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '%Y)' at line 1
+mysql> SELECT DATE_FORMAT("2020-6-22","%Y");
++-------------------------------+
+| DATE_FORMAT("2020-6-22","%Y") |
++-------------------------------+
+| 2020                          |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATEDIFF("2020-6-22","2017-06-30");
++------------------------------------+
+| DATEDIFF("2020-6-22","2017-06-30") |
++------------------------------------+
+|                               1088 |
++------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2020-6-22","%M");
++-------------------------------+
+| DATE_FORMAT("2020-6-22","%M") |
++-------------------------------+
+| June                          |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2020-6-22","%m");
++-------------------------------+
+| DATE_FORMAT("2020-6-22","%m") |
++-------------------------------+
+| 06                            |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2020-6-22","%D");
++-------------------------------+
+| DATE_FORMAT("2020-6-22","%D") |
++-------------------------------+
+| 22nd                          |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2020-6-22","%m");
++-------------------------------+
+| DATE_FORMAT("2020-6-22","%m") |
++-------------------------------+
+| 06                            |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_FORMAT("2020-6-22","%d");
++-------------------------------+
+| DATE_FORMAT("2020-6-22","%d") |
++-------------------------------+
+| 22                            |
++-------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_ADD("2017-06-30",INTERVAL 10 DAY);
++----------------------------------------+
+| DATE_ADD("2017-06-30",INTERVAL 10 DAY) |
++----------------------------------------+
+| 2017-07-10                             |
++----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATE_SUB("2017-06-30",INTERVAL 10 DAY);
++----------------------------------------+
+| DATE_SUB("2017-06-30",INTERVAL 10 DAY) |
++----------------------------------------+
+| 2017-06-20                             |
++----------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAY("2017-06-30");
++-------------------+
+| DAY("2017-06-30") |
++-------------------+
+|                30 |
++-------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAY(CURRDATE());
+ERROR 1305 (42000): FUNCTION it.CURRDATE does not exist
+mysql> SELECT DAY(CURDATE());
++----------------+
+| DAY(CURDATE()) |
++----------------+
+|             25 |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYNAME("2017-06-30");
++-----------------------+
+| DAYNAME("2017-06-30") |
++-----------------------+
+| Friday                |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFMONTH("2017-06-30");
++--------------------------+
+| DAYOFMONTH("2017-06-30") |
++--------------------------+
+|                       30 |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DATOFYEAR("2017-06-30");
+ERROR 1305 (42000): FUNCTION it.DATOFYEAR does not exist
+mysql> SELECT DAYOFYEAR("2017-06-30");
++-------------------------+
+| DAYOFYEAR("2017-06-30") |
++-------------------------+
+|                     181 |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DAYOFYEAR(CURDATE());
++----------------------+
+| DAYOFYEAR(CURDATE()) |
++----------------------+
+|                  329 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SYSDATE();
++---------------------+
+| SYSDATE()           |
++---------------------+
+| 2025-11-25 12:36:54 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LENGTH("EDUCATION");
++---------------------+
+| LENGTH("EDUCATION") |
++---------------------+
+|                   9 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT INSTR("EDUCATION","A");
++------------------------+
+| INSTR("EDUCATION","A") |
++------------------------+
+|                      5 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LCASE("EDUCATION");
++--------------------+
+| LCASE("EDUCATION") |
++--------------------+
+| education          |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUBSTR("EDUCATION",2,4);
++-------------------------+
+| SUBSTR("EDUCATION",2,4) |
++-------------------------+
+| DUCA                    |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUBSTR("EDUCATION",0,4);
++-------------------------+
+| SUBSTR("EDUCATION",0,4) |
++-------------------------+
+|                         |
++-------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LPAD("EDUCATION",12,'@');
++--------------------------+
+| LPAD("EDUCATION",12,'@') |
++--------------------------+
+| @@@EDUCATION             |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT LPAD("EDUCATION",10,'@');
++--------------------------+
+| LPAD("EDUCATION",10,'@') |
++--------------------------+
+| @EDUCATION               |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT RPAD("EDUCATION",10,'@');
++--------------------------+
+| RPAD("EDUCATION",10,'@') |
++--------------------------+
+| EDUCATION@               |
++--------------------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE ST ADD COLUMN SALARY INT;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC ST;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| st_id   | int         | YES  |     | NULL    |       |
+| st_name | varchar(20) | YES  |     | NULL    |       |
+| EMP_ID  | int         | YES  |     | NULL    |       |
+| SALARY  | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE ST DROP COLUMN SALARY;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE ST ADD COLUMN SALARY INT DEFAULT 5000;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM ST;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   5000 |
+|     2 | NIPA    |    102 |   5000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *ST_NAME,CONVERT(SALARY,CHAR)SALARY FROM ST;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ST_NAME,CONVERT(SALARY,CHAR)SALARY FROM ST' at line 1
+mysql> SELECT *ST_NAME,CONVERT(SALARY,CHAR) SALARY FROM ST;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ST_NAME,CONVERT(SALARY,CHAR) SALARY FROM ST' at line 1
+mysql> SELECT ST_NAME,CONVERT(SALARY,CHAR) SALARY FROM ST;
++---------+--------+
+| ST_NAME | SALARY |
++---------+--------+
+| NUS     | 5000   |
+| NIPA    | 5000   |
+| ABD     | 5000   |
+| ABD     | 5000   |
++---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> NOTEE;
