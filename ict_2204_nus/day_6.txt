@@ -1,0 +1,265 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| iit14batch         |
+| information_schema |
+| it                 |
+| labquiz_1_1993     |
+| mysql              |
+| performance_schema |
+| pmit               |
+| shop               |
+| sys                |
+| trade              |
++--------------------+
+11 rows in set (0.01 sec)
+
+mysql> use it;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_it |
++--------------+
+| cr           |
+| hall         |
+| st           |
++--------------+
+3 rows in set (0.00 sec)
+
+mysql> drop table cr;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop table hall;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> drop table st;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create table st(st_id int,st_name varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table dept(dept_id int,dept_name varchar(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show indexes in it;
+ERROR 1146 (42S02): Table 'it.it' doesn't exist
+mysql> show index in emp;
+ERROR 1146 (42S02): Table 'it.emp' doesn't exist
+mysql> SHOW INDEXES IN EMP;
+ERROR 1146 (42S02): Table 'it.emp' doesn't exist
+mysql> SHOW INDEXES IN DEPT;
+Empty set (0.00 sec)
+
+mysql> INSERT INTO ST VALUES(1,'NUS'),(2,'NIPA');
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> SELECT AVG(ST_ID)FROM ST;
++------------+
+| AVG(ST_ID) |
++------------+
+|     1.5000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(ST_ID)FROM ST;
++--------------+
+| COUNT(ST_ID) |
++--------------+
+|            2 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(ST_ID)FROM ST;
++------------+
+| MIN(ST_ID) |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(ST_ID)FROM ST;
++------------+
+| MAX(ST_ID) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SUM(ST_ID)FROM ST;
++------------+
+| SUM(ST_ID) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(ST_ID)FROM ST WHERE ST_ID>1;
++--------------+
+| COUNT(ST_ID) |
++--------------+
+|            1 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(ST_ID)FROM ST WHERE ST_ID>1;
++------------+
+| AVG(ST_ID) |
++------------+
+|     2.0000 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO ST VALUES (3,'ABD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT MIN(ST_ID)FROM ST WHERE ST_ID>1;
++------------+
+| MIN(ST_ID) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(ST_ID)FROM ST WHERE ST_ID>1;
++------------+
+| MAX(ST_ID) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> NSERT INTO ST VALUES (3,'ABD');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NSERT INTO ST VALUES (3,'ABD')' at line 1
+mysql> INSERT INTO ST VALUES (3,'ABD');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT DISTINCT(ST_ID)FROM ST WHERE ST_ID>1;
++-------+
+| ST_ID |
++-------+
+|     2 |
+|     3 |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT*FROM ST;
++-------+---------+
+| st_id | st_name |
++-------+---------+
+|     1 | NUS     |
+|     2 | NIPA    |
+|     3 | ABD     |
+|     3 | ABD     |
++-------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT DISTINCT(ST_ID)FROM ST;
++-------+
+| ST_ID |
++-------+
+|     1 |
+|     2 |
+|     3 |
++-------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT COUNT (DISTINCT ST_ID)FROM ST;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DISTINCT ST_ID)FROM ST' at line 1
+mysql> SELECT COUNT (DISTINCT ST_ID) FROM ST;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'DISTINCT ST_ID) FROM ST' at line 1
+mysql> SELECT COUNT(DISTINCT ST_ID) FROM ST;
++-----------------------+
+| COUNT(DISTINCT ST_ID) |
++-----------------------+
+|                     3 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> ALTER TABLE ST ADD COLUMN EMP_ID INT;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE ST SET EMP_ID=101 WHERE ST_ID=1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE ST SET EMP_ID=102 WHERE ST_ID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE ST SET EMP_ID=102 WHERE ST_ID=2;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE ST SET EMP_ID=103 WHERE ST_ID=3;
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> UPDATE ST SET EMP_ID=104 WHERE ST_ID=3;
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> SELECT*FROM ST;
++-------+---------+--------+
+| st_id | st_name | EMP_ID |
++-------+---------+--------+
+|     1 | NUS     |    102 |
+|     2 | NIPA    |    102 |
+|     3 | ABD     |    104 |
+|     3 | ABD     |    104 |
++-------+---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID,COUNT (ST_ID) FROM ST GROUP BT WMP_ID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'BT WMP_ID' at line 1
+mysql> SELECT EMP_ID,COUNT (ST_ID) FROM ST GROUP BY EMP_ID;
+ERROR 1630 (42000): FUNCTION it.COUNT does not exist. Check the 'Function Name Parsing and Resolution' section in the Reference Manual
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID;
++--------+--------------+
+| EMP_ID | COUNT(ST_ID) |
++--------+--------------+
+|    102 |            2 |
+|    104 |            2 |
++--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID WHERE EMP_ID>100;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE EMP_ID>100' at line 1
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID ORDERBY BY ST_ID ASC;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'ORDERBY BY ST_ID ASC' at line 1
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID ORDER BY ST_ID ASC;
+ERROR 1055 (42000): Expression #1 of ORDER BY clause is not in GROUP BY clause and contains nonaggregated column 'it.ST.st_id' which is not functionally dependent on columns in GROUP BY clause; this is incompatible with sql_mode=only_full_group_by
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID ORDER BY EMP_ID ASC;
++--------+--------------+
+| EMP_ID | COUNT(ST_ID) |
++--------+--------------+
+|    102 |            2 |
+|    104 |            2 |
++--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID HAVING COUNT(ST_ID)ORDER BY EMP_ID ASC;
++--------+--------------+
+| EMP_ID | COUNT(ST_ID) |
++--------+--------------+
+|    102 |            2 |
+|    104 |            2 |
++--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID HAVING COUNT(ST_ID)>=2 ORDER BY EMP_ID ASC;
++--------+--------------+
+| EMP_ID | COUNT(ST_ID) |
++--------+--------------+
+|    102 |            2 |
+|    104 |            2 |
++--------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT EMP_ID,COUNT(ST_ID) FROM ST GROUP BY EMP_ID HAVING COUNT(ST_ID)>2 ORDER BY EMP_ID ASC;
+Empty set (0.00 sec)
+
+mysql> NOTEE;
