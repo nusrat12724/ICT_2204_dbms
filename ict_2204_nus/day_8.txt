@@ -1,0 +1,439 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| iit                |
+| iit14batch         |
+| information_schema |
+| it                 |
+| labquiz_1_1993     |
+| mysql              |
+| performance_schema |
+| pmit               |
+| shop               |
+| sys                |
+| trade              |
++--------------------+
+11 rows in set (0.00 sec)
+
+mysql> use it;
+Database changed
+mysql> show tables;
++--------------+
+| Tables_in_it |
++--------------+
+| dept         |
+| st           |
++--------------+
+2 rows in set (0.01 sec)
+
+mysql> desc st;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| st_id   | int         | YES  |     | NULL    |       |
+| st_name | varchar(20) | YES  |     | NULL    |       |
+| EMP_ID  | int         | YES  |     | NULL    |       |
+| SALARY  | int         | YES  |     | 5000    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select*from st;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   5000 |
+|     2 | NIPA    |    102 |   5000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT ST_NAME,CONVERT(SALARY,CHAR) SALARY FROM ST;
++---------+--------+
+| ST_NAME | SALARY |
++---------+--------+
+| NUS     | 5000   |
+| NIPA    | 5000   |
+| ABD     | 5000   |
+| ABD     | 5000   |
++---------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ST_NAME,CONVERT(SAL,CHAR) SALARY FROM ST;
+ERROR 1054 (42S22): Unknown column 'SAL' in 'field list'
+mysql> SELECT ST_NAME,CONVERT(SALARY,CHAR) SAL FROM ST;
++---------+------+
+| ST_NAME | SAL  |
++---------+------+
+| NUS     | 5000 |
+| NIPA    | 5000 |
+| ABD     | 5000 |
+| ABD     | 5000 |
++---------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT(SALARY,CHAR) SAL FROM ST;
++------+
+| SAL  |
++------+
+| 5000 |
+| 5000 |
+| 5000 |
+| 5000 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT CONVERT("2025-11-12",DATE);
++----------------------------+
+| CONVERT("2025-11-12",DATE) |
++----------------------------+
+| 2025-11-12                 |
++----------------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ST_NAME, CONVERT(SALARY,FLOAT) SAL FROM ST;
++---------+------+
+| ST_NAME | SAL  |
++---------+------+
+| NUS     | 5000 |
+| NIPA    | 5000 |
+| ABD     | 5000 |
+| ABD     | 5000 |
++---------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ST_NAME, CONVERT(SALARY,DECIMAL) SAL FROM ST;
++---------+------+
+| ST_NAME | SAL  |
++---------+------+
+| NUS     | 5000 |
+| NIPA    | 5000 |
+| ABD     | 5000 |
+| ABD     | 5000 |
++---------+------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ST_NAME, CONVERT(SALARY,DECIMAL(10,2) SAL FROM ST;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SAL FROM ST' at line 1
+mysql> SELECT ST_NAME, CONVERT(SALARY,DECIMAL(10,2)) SAL FROM ST;
++---------+---------+
+| ST_NAME | SAL     |
++---------+---------+
+| NUS     | 5000.00 |
+| NIPA    | 5000.00 |
+| ABD     | 5000.00 |
+| ABD     | 5000.00 |
++---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ABS(-15);
++----------+
+| ABS(-15) |
++----------+
+|       15 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MOD(8,5);
++----------+
+| MOD(8,5) |
++----------+
+|        3 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT FLOOR(7.6);
++------------+
+| FLOOR(7.6) |
++------------+
+|          7 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT CEIL(7.6);
++-----------+
+| CEIL(7.6) |
++-----------+
+|         8 |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT POWER(2,3);
++------------+
+| POWER(2,3) |
++------------+
+|          8 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(5.6);
++------------+
+| ROUND(5.6) |
++------------+
+|          6 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ROUND(5.4);
++------------+
+| ROUND(5.4) |
++------------+
+|          5 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT SQRT(9);
++---------+
+| SQRT(9) |
++---------+
+|       3 |
++---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ALL(SELECT SALARY FROM ST WHERE ST_ID>2);
+Empty set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ALL(SELECT SALARY FROM ST WHERE ST_ID>1);
+Empty set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ALL(SELECT SALARY FROM ST WHERE ST_ID=1);
+Empty set (0.00 sec)
+
+mysql> SELECT*FROM ST;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   5000 |
+|     2 | NIPA    |    102 |   5000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE ST SET SALARY=4000 WHERE ST_ID=1;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM ST;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   5000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ALL(SELECT SALARY FROM ST WHERE ST_ID=1);
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     2 | NIPA    |    102 |   5000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> UPDATE ST SET SALARY=6000 WHERE ST_ID=2;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT*FROM ST;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ALL(SELECT SALARY FROM ST WHERE ST_ID>1);
+Empty set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ANY(SELECT SALARY FROM ST WHERE ST_ID=1);
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY>ANY(SELECT SALARY FROM ST WHERE ST_ID>1);
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     2 | NIPA    |    102 |   6000 |
++-------+---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY BETWEEN 4000 AND 6000;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY BETWEEN 5000 AND 6000;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY IN (5000, 6000);
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+3 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE SALARY IN (4000, 6000);
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
++-------+---------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_NAME LIKE 'N%';
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
++-------+---------+--------+--------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_NAME LIKE '-N%';
+Empty set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_NAME LIKE '-U%';
+Empty set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_NAME LIKE '_U%';
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
++-------+---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM ST WHERE ST_NAME LIKE '_I_A%';
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     2 | NIPA    |    102 |   6000 |
++-------+---------+--------+--------+
+1 row in set (0.00 sec)
+
+mysql> DESC EMP;
+ERROR 1146 (42S02): Table 'it.emp' doesn't exist
+mysql> SHOW TABLES;
++--------------+
+| Tables_in_it |
++--------------+
+| dept         |
+| st           |
++--------------+
+2 rows in set (0.00 sec)
+
+mysql> DESC DEPT;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| dept_id   | int         | YES  |     | NULL    |       |
+| dept_name | varchar(20) | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMP(EMP_ID INT,SALARY INT,EMP_NAME VARCHAR(20));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> INSERT INTO EMP(102,5000,'NUSRAT');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '102,5000,'NUSRAT')' at line 1
+mysql> INSERT INTO EMP VALUES(102,5000,'NUSRAT');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT*FROM ST;
++-------+---------+--------+--------+
+| st_id | st_name | EMP_ID | SALARY |
++-------+---------+--------+--------+
+|     1 | NUS     |    102 |   4000 |
+|     2 | NIPA    |    102 |   6000 |
+|     3 | ABD     |    104 |   5000 |
+|     3 | ABD     |    104 |   5000 |
++-------+---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT*FROM EMP;
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    102 |   5000 | NUSRAT   |
++--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMP_ID=(SELECT EMP_ID FROM ST WHERE SALARY=6000);
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    102 |   5000 | NUSRAT   |
++--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMP_ID IN (SELECT EMP_ID FROM ST WHERE SALARY=6000);
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    102 |   5000 | NUSRAT   |
++--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMP_ID IN (SELECT EMP_ID FROM ST WHERE SALARY=5000);
+Empty set (0.00 sec)
+
+mysql> INSERT INTO EMP(104,4000,'NUSRAT');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '104,4000,'NUSRAT')' at line 1
+mysql> INSERT INTO EMP VALUES(104,4000,'NUSRAT');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMP_ID IN (SELECT EMP_ID FROM ST WHERE SALARY=5000);
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    104 |   4000 | NUSRAT   |
++--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMP_ID SOME (SELECT EMP_ID FROM ST WHERE SALARY=5000);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'SOME (SELECT EMP_ID FROM ST WHERE SALARY=5000)' at line 1
+mysql> SELECT *FROM EMP WHERE EMP_ID >SOME (SELECT EMP_ID FROM ST WHERE SALARY=5000);
+Empty set (0.00 sec)
+
+mysql> SELECT *FROM EMP WHERE EMP_ID >SOME (SELECT EMP_ID FROM ST WHERE SALARY=6000);
++--------+--------+----------+
+| EMP_ID | SALARY | EMP_NAME |
++--------+--------+----------+
+|    104 |   4000 | NUSRAT   |
++--------+--------+----------+
+1 row in set (0.00 sec)
+
+mysql> NOTEE;
+mysql> NOTEE;
